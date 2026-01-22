@@ -38,11 +38,40 @@ a {
 #code {
   display: none;
   color: rgb(196, 255, 255);
-  font-size: 16px;
+  font-size: 18px;
   margin-top: 70px;
-  line-height: 25px;
-  font-size: larger;
-  font-weight: bolder;
+  line-height: 35px;
+  font-family: 'Dancing Script', cursive;
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(196, 255, 255, 0.5);
+}
+
+.say {
+  margin-left: 5px;
+  position: relative;
+  display: inline-block;
+}
+
+.say.shine {
+  animation: shineEffect 1.5s ease-in-out;
+}
+
+@keyframes shineEffect {
+  0% {
+    text-shadow: 0 0 10px rgba(196, 255, 255, 0.5);
+    transform: scale(1);
+  }
+  50% {
+    text-shadow: 0 0 30px rgba(255, 255, 255, 1), 
+                 0 0 40px rgba(196, 255, 255, 0.8),
+                 0 0 60px rgba(255, 215, 0, 0.6);
+    transform: scale(1.05);
+    color: rgb(255, 255, 255);
+  }
+  100% {
+    text-shadow: 0 0 10px rgba(196, 255, 255, 0.5);
+    transform: scale(1);
+  }
 }
 #clock-box {
   position: absolute;
@@ -77,9 +106,6 @@ a {
 }
 .hand {
   cursor: pointer;
-}
-.say {
-  margin-left: 5px;
 }
 .space {
   margin-right: 150px;
@@ -136,7 +162,7 @@ a {
     width: 100%;
     height: auto;
     min-height: 400px;
-    margin-top: 5px;
+    margin-top: 50%;
   }
   
   #canvas {
