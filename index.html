@@ -2,6 +2,7 @@
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>HBD love</title>	    
     <link type="text/css" rel="stylesheet" href="./file/default.css">
     <script type="text/javascript" src="./file/jquery.min.js"></script>
@@ -32,7 +33,7 @@
                 <div id="code">
 
                     <span class="say">happiness 💞</span><br>
-                    <span class="say">Happy Birthday 🎈</span><br>
+                    <span class="say">Happy Birthday to you🎈</span><br>
                     <span class="say">May Allah bless you 🍀</span><br>
                     <span class="say">And give u many happiness 💕</span><br>
                     <span class="say">love success❤️</span><br>
@@ -56,10 +57,28 @@
             return false;
         }
 
-        var width = canvas.width();
-        var height = canvas.height();        
+        // Keep internal resolution fixed for animation, scale via CSS
+        var width = 1100;
+        var height = 680;
+        
         canvas.attr("width", width);
         canvas.attr("height", height);
+        
+        // Make canvas responsive via CSS
+        function updateCanvasSize() {
+            var containerWidth = Math.min(1100, window.innerWidth - 20);
+            var aspectRatio = 680 / 1100;
+            var displayHeight = containerWidth * aspectRatio;
+            canvas.css("width", containerWidth + "px");
+            canvas.css("height", displayHeight + "px");
+        }
+        
+        updateCanvasSize();
+        
+        // Update on resize
+        $(window).on('resize', function() {
+            updateCanvasSize();
+        });
 
         var opts = {
             seed: {
@@ -104,9 +123,12 @@
 
         canvas.click(function(e) {
             playAudio();
-            var offset = canvas.offset(), x, y;
-            x = e.pageX - offset.left;
-            y = e.pageY - offset.top;
+            var offset = canvas.offset();
+            var rect = canvas[0].getBoundingClientRect();
+            var scaleX = width / rect.width;
+            var scaleY = height / rect.height;
+            var x = (e.pageX - offset.left) * scaleX;
+            var y = (e.pageY - offset.top) * scaleY;
             if (seed.hover(x, y)) {
                 hold = 0; 
                 canvas.unbind("click");
@@ -114,9 +136,12 @@
                 canvas.removeClass('hand');
             }
         }).mousemove(function(e) {
-            var offset = canvas.offset(), x, y;
-            x = e.pageX - offset.left;
-            y = e.pageY - offset.top;
+            var offset = canvas.offset();
+            var rect = canvas[0].getBoundingClientRect();
+            var scaleX = width / rect.width;
+            var scaleY = height / rect.height;
+            var x = (e.pageX - offset.left) * scaleX;
+            var y = (e.pageY - offset.top) * scaleY;
             canvas.toggleClass('hand', seed.hover(x, y));
         });
 
